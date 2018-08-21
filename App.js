@@ -44,7 +44,7 @@ class Navigation extends React.Component {
         <Image source={require('./assets/reminders.png')} style={{width:40, height:40}}>
         </Image>
         <TouchableOpacity onPress={this.props.changeToHome}>
-          <Image source={require('./assets/enso.png')} style={{width:40, height:40}}>
+          <Image source={require('./assets/enso.png')} style={{width:40, height:40, tintColor:'gold'}}>
           </Image>
         </TouchableOpacity>
 
@@ -139,7 +139,7 @@ export default class App extends React.Component {
           updateProgress={(type)=>this.updateProgress(type)}>
         </Body>
         {(this.state.mode == 'home' || this.state.mode == 'review') ?
-          <Navigation changeToHome={()=>this.changeToHome()}>
+          <Navigation changeToHome={()=>this.changeToHome()} mode={this.state.mode}>
           </Navigation>
             :
           <View></View>}
