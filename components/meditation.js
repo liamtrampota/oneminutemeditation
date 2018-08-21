@@ -116,29 +116,6 @@ class Meditation extends React.Component {
           One minute meditation.
         </Animated.Text>
 
-        {/* <View style={{position:'absolute', marginTop:180, alignItems:"center"}}>
-          {[5,4,3,2,1].map(
-            (i)=>{
-              if (i==this.state.counter) {
-                return(
-                <Animated.Text key={i} style={{color: headTextColor, fontSize:headTextSize}}>{i}</Animated.Text>
-                )
-              } else if (i<this.state.counter) {
-                return(
-                <Animated.Text key={i} style={{color: 'rgba(0, 0, 0, 0.5)', fontSize:15}}>{i}</Animated.Text>
-                )
-              } else if(this.state.counter>0){
-                return(
-                <Animated.Text key={i} style={{color: 'rgba(0, 0, 0, 0.2)', fontSize:15}}>{i}</Animated.Text>
-                )
-              } else {
-                return(
-                <Animated.Text key={i} style={{color: fadeNumberColor, fontSize:15}}>{i}</Animated.Text>
-                )
-              }
-            }
-          )}
-        </View> */}
 
         <View style={{display:'flex', flex:1, justifyContent:'center'}}>
           <Animated.View style={{backgroundColor:color, width:size, height:size, borderRadius:radius, display:'flex', marginTop:50, justifyContent:'center', alignItems:'center'}}>
