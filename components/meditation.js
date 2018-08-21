@@ -4,24 +4,49 @@ import { Text, View, Animated, Easing } from 'react-native';
 class BasicMeditation extends React.Component {
   state = {
     circleAnim: new Animated.Value(0),
-    counter: 5
+    counter: 5,
+    TIMING: 1000,
+    continueAnim: new Animated.Value(0)
   }
 
-  componentDidMount() {
-    Animated.loop(
-        Animated.timing(
-          this.state.circleAnim,
-          {
-            toValue:1,
-            duration: 9000,
-            easing: Easing.linear()
-          }
-        ), {iterations: 5}
-    ).start()
 
-    setInterval(()=>{
-      this.setState({counter: this.state.counter-1})
-    }, 9000
+  componentDidMount() {
+    Animated.sequence([
+      Animated.loop(
+          Animated.timing(
+            this.state.circleAnim,
+            {
+              toValue:1,
+              duration: this.state.TIMING,
+              easing: Easing.linear()
+            }
+          ), {iterations: 5}
+      ),
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(
+            this.state.continueAnim, {
+              toValue:1,
+              duration:2000,
+            }),
+          Animated.timing(
+            this.state.continueAnim, {
+              toValue:0,
+              duration:2000
+            })
+        ])
+      )
+    ]).start()
+
+    let a=[1,2,3,4,5].map(x=>x*this.state.TIMING)
+    console.log("AAAAAA",a);
+    a.forEach((y)=>
+      setTimeout(()=>{
+        this.setState((prevState) =>
+          ({ counter: prevState.counter-1  })
+        );
+      },
+      y)
     )
   }
 
@@ -54,21 +79,54 @@ class BasicMeditation extends React.Component {
       inputRange: [0.5,1],
       outputRange: [30, 15]
     })
+    var headTextSize = this.state.circleAnim.interpolate({
+      inputRange: [0,0.5,1],
+      outputRange: [15, 26, 15]
+    })
+    var headTextColor = this.state.circleAnim.interpolate({
+      inputRange: [0,0.5,1],
+      outputRange: ['rgba(0, 0, 0, 0.5)','rgba(0, 0, 0, 1)', 'rgba(0, 0, 0, 0.2)']
+    })
+    var continueColor = this.state.continueAnim.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['rgba(255, 255,255, 1)', 'rgba(255,255,255,.2)']
+    })
 
 
 
     return(
       <View style={{flex:1, display:'flex', alignItems:'center'}}>
-        <Text style={{position:'absolute', marginTop:50}}>
+        <Text style={{position:'absolute', marginTop:50, fontSize:30, color:'darkblue', textAlign:'center'}}>
           Lets get started with five calming breaths.
         </Text>
-        <Text style={{position:'absolute', marginTop:100}}>
-          {this.state.counter}
-        </Text>
+        {this.state.counter ?
+          <View>
+            <View style={{position:'absolute', marginTop:180, alignItems:"center"}}>
+              {[5,4,3,2,1].map(
+                (i)=>{
+                  if (i==this.state.counter) {
+                    return(
+                    <Animated.Text key={i} style={{color: headTextColor, fontSize:headTextSize}}>{i}</Animated.Text>
+                    )
+                  } else if (i<this.state.counter) {
+                    return(
+                    <Animated.Text key={i} style={{color: 'rgba(0, 0, 0, 0.5)', fontSize:15}}>{i}</Animated.Text>
+                    )
+                  } else {
+                    return(
+                    <Animated.Text key={i} style={{color: 'rgba(0, 0, 0, 0.2)', fontSize:15}}>{i}</Animated.Text>
+                    )
+                  }
+                }
+              )}
+            </View>
+          </View> :
+          <View></View>
+        }
         <View style={{display:'flex', flex:1, justifyContent:'center'}}>
           <Animated.View style={{backgroundColor:color, width:size, height:size, borderRadius:radius, display:'flex', marginTop:50, justifyContent:'center', alignItems:'center'}}>
             {this.state.counter ?
-              <View>
+              <View style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                 <Animated.Text style={{color:inOpacity, position:'absolute', fontSize:inTextSize}}>
                   i n
                 </Animated.Text>
@@ -77,9 +135,9 @@ class BasicMeditation extends React.Component {
                 </Animated.Text>
               </View>
                 :
-              <Text>
+              <Animated.Text style={{color:continueColor, fontSize:18}}>
                 Tap to continue
-              </Text>
+              </Animated.Text>
               }
             {/* // <Animated.Text style={{color:inOpacity, position:'absolute', fontSize:inTextSize}}>
             //   i n
