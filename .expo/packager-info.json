@@ -1,8 +1,8 @@
 {
-  "expoServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "packagerPort": null,
-  "packagerPid": null
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://8j-e5t.liamtrampota.oneminutemeditation.exp.direct",
+  "packagerNgrokUrl": "https://packager.8j-e5t.liamtrampota.oneminutemeditation.exp.direct",
+  "ngrokPid": 18496,
+  "packagerPort": 19002,
+  "packagerPid": 18477
 }

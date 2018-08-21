@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, View, Animated, Easing, TouchableOpacity } from 'react-native';
 
-class Meditation extends React.Component {
+class LoadingMeditation extends React.Component {
   state = {
     circleAnim: new Animated.Value(0),
-    counter: 7,
+    counter: 5,
     TIMING: 500,
     continueAnim: new Animated.Value(0),
     fadeAnim: new Animated.Value(0)
@@ -21,7 +21,7 @@ class Meditation extends React.Component {
               duration: this.state.TIMING,
               easing: Easing.linear()
             }
-          ), {iterations: 7}
+          ), {iterations: 5}
       ),
       Animated.parallel([
         Animated.loop(
@@ -47,7 +47,7 @@ class Meditation extends React.Component {
       ])
     ]).start()
 
-    let a=[1,2,3,4,5,6,7].map(x=>x*this.state.TIMING)
+    let a=[1,2,3,4,5].map(x=>x*this.state.TIMING)
     console.log("AAAAAA",a);
     a.forEach((y)=>
       setTimeout(()=>{
@@ -113,10 +113,10 @@ class Meditation extends React.Component {
     return(
       <View style={{flex:1, display:'flex', alignItems:'center'}}>
         <Animated.Text style={{position:'absolute', marginTop:50, fontSize:30, color:fadeTitleColor, textAlign:'center'}}>
-          One minute meditation.
+          Lets get started with five calming breaths.
         </Animated.Text>
 
-        {/* <View style={{position:'absolute', marginTop:180, alignItems:"center"}}>
+        <View style={{position:'absolute', marginTop:180, alignItems:"center"}}>
           {[5,4,3,2,1].map(
             (i)=>{
               if (i==this.state.counter) {
@@ -138,7 +138,7 @@ class Meditation extends React.Component {
               }
             }
           )}
-        </View> */}
+        </View>
 
         <View style={{display:'flex', flex:1, justifyContent:'center'}}>
           <Animated.View style={{backgroundColor:color, width:size, height:size, borderRadius:radius, display:'flex', marginTop:50, justifyContent:'center', alignItems:'center'}}>
@@ -152,7 +152,7 @@ class Meditation extends React.Component {
                 </Animated.Text>
               </View>
                 :
-              <TouchableOpacity onPress={this.props.changeToReview}>
+              <TouchableOpacity onPress={this.props.changeToHome}>
                 <Animated.Text style={{color:continueColor, fontSize:18}}>
 
                     Tap to continue
@@ -169,4 +169,4 @@ class Meditation extends React.Component {
 
 }
 
-export default Meditation
+export default LoadingMeditation
