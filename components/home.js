@@ -1,5 +1,8 @@
 import React from 'react';
-import { Text, View, Animated, Easing, TouchableOpacity, Image } from 'react-native';
+import { Asset, Video } from 'expo';
+import { StyleSheet, Text, View, Animated, Easing, TouchableOpacity, Image } from 'react-native';
+// import Video from 'react-native-video';
+
 
 class Home extends React.Component{
   constructor(props){
@@ -46,6 +49,13 @@ class Home extends React.Component{
     return(
       <View style={{flex:1, display:'flex', justifyContent:'center', alignItems:'center'}}>
 
+        <View>
+          <Text>
+            Hello!
+          </Text>
+          <VideoTest />
+        </View>
+
         <TouchableOpacity onPress={this.props.changeToMeditation}>
           <Animated.View style={{width:180, height:180, borderRadius:90, backgroundColor:colorAnim1}}>
           </Animated.View>
@@ -61,11 +71,36 @@ class Home extends React.Component{
             </Animated.View>
           </TouchableOpacity>
         </View>
-
       </View>
+
     )
   }
 }
+
+class VideoTest extends React.Component {
+
+  render() {
+    // /Users/howardchong/horizons/oneminutemeditation/assets/sampleVid.mp4
+    // { uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }
+    return (
+      <Video
+        source={require('../assets/sampleVid.mp4')}
+        rate={1.0}
+        volume={1.0}
+        isMuted={false}
+        resizeMode="cover"
+        shouldPlay
+        isLooping
+        style={{ width: 200, height: 200 }}
+      />
+    )
+  }
+}
+
+
+
+// Later on in your styles..
+
 
 
 export default Home
