@@ -5,11 +5,12 @@ class Home extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      colorAnim: new Animated.Value(0)
+      colorAnim: new Animated.Value(0),
     }
   }
 
   componentDidMount() {
+
     Animated.loop(
       Animated.sequence([
         Animated.timing(
@@ -61,16 +62,10 @@ class Home extends React.Component{
           </TouchableOpacity>
         </View>
 
-        <Image source={require('../assets/reminders.png')} style={{width:40, height:40, position:'absolute', bottom:20, left:20}}>
-
-        </Image>
-        <Image source={require('../assets/progress.png')} style={{width:40, height:40, position:'absolute', bottom:20, right:20}}>
-
-        </Image>
-
       </View>
     )
   }
 }
+
 
 export default Home
