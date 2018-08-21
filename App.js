@@ -176,22 +176,7 @@ export default class App extends React.Component {
     }
   }
 
-  render() {
-    return (
-      <View style={{backgroundColor:'skyblue', display:'flex', flex:1}}>
-        <Body mode={this.state.mode} changeToHome={()=>this.changeToHome()}
-          changeToMeditation={()=>this.changeToMeditation()}
-          changeToReview={()=>this.changeToReview()}
-          updateProgress={(type)=>this.updateProgress(type)}>
-        </Body>
-        {(this.state.mode == 'home' || this.state.mode == 'review') ?
-          <Navigation changeToHome={()=>this.changeToHome()} mode={this.state.mode}>
-          </Navigation>
-            :
-          <View></View>}
-      </View>
-    )
-  }
+
 }
 
 
