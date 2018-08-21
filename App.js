@@ -1,4 +1,5 @@
 import React from 'react';
+import { Asset, SplashScreen } from 'expo';
 import { StyleSheet, Text, View, AsyncStorage , Image, TouchableOpacity} from 'react-native';
 import LoadingMeditation from './components/loadingMeditation'
 import Home from './components/home'
@@ -58,15 +59,20 @@ class Navigation extends React.Component {
 }
 
 export default class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.state = ({
+    this.state = {
+      firstLoading: true,
       mode: 'loading', // loading, home, meditation, review
-      progressObj: {}
-    })
+      progressObj: {
+        userId: null,
+        breaths: []
+      }
+    }
   }
 
   componentDidMount(){
+    SplashScreen.preventAutoHide();
     var retrieveData = async () => {
     try {
       console.log('HELLO')
@@ -94,6 +100,46 @@ export default class App extends React.Component {
   changeToMeditation(){
     this.setState({mode:'meditation'})
   }
+
+  render() {
+    if (this.state.firstLoading) {
+      return (
+        <View style={{ flex: 1}}>
+          <Image
+            source={require('./assets/SuzukiRoshi.png')}
+            onLoad={this._cacheResourcesAsync}
+          />
+        </View>
+      )
+    } else {
+      return (
+        <View style={{backgroundColor:'skyblue', display:'flex', flex:1}}>
+          <Body mode={this.state.mode} changeToHome={()=>this.changeToHome()}
+            changeToMeditation={()=>this.changeToMeditation()}
+            changeToReview={()=>this.changeToReview()}
+            updateProgress={(type)=>this.updateProgress(type)}>
+          </Body>
+          {(this.state.mode == 'home' || this.state.mode == 'review') ?
+            <Navigation changeToHome={()=>this.changeToHome()}>
+            </Navigation>
+              :
+            <View></View>}
+        </View>
+      )
+    }
+  }
+
+  _cacheResourcesAsync = ()=> {
+    console.log("cache resources async, 3 second delay");
+    setTimeout(
+      ()=>{
+        SplashScreen.hide();
+        this.setState({firstLoading: false});
+      },
+      500
+    );
+  }
+
 
   updateProgress(type) {
     console.log('UPDATE PROGRESS', this.state.progressObj)

@@ -1,8 +1,8 @@
 {
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "packagerPort": 19001,
-  "packagerPid": 20522
+  "expoServerPort": 19003,
+  "packagerPort": 19004,
+  "packagerPid": 10271,
+  "expoServerNgrokUrl": "https://km-if4.chonghorizons.oneminutemeditation.exp.direct",
+  "packagerNgrokUrl": "https://packager.km-if4.chonghorizons.oneminutemeditation.exp.direct",
+  "ngrokPid": 10295
 }

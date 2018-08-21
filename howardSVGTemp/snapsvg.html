@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.5.1/snap.svg-min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <h1>Hello</h1>
+    <div style="border: 2px red solid">
+      before
+      <svg id="svg" width=400 height=600>
+
+      </svg>
+      after
+    </div>
+  </body>
+
+  <script>
+    $( document ).ready(function() {
+      console.log( "ready!" );
+
+      var s=Snap("#svg");
+      var bigCircle = s.circle(150,150,100);
+      bigCircle.attr({
+        
+      })
+      console.log("hello");
+    });
+  </script>
+</html>
