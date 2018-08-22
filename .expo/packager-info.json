@@ -1,8 +1,8 @@
 {
-  "expoServerPort": 19002,
-  "packagerPort": 19003,
-  "packagerPid": 27356,
-  "expoServerNgrokUrl": "https://km-if4.liamtrampota.oneminutemeditation.exp.direct",
-  "packagerNgrokUrl": "https://packager.km-if4.liamtrampota.oneminutemeditation.exp.direct",
-  "ngrokPid": 27379
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

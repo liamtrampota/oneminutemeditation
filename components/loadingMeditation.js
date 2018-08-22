@@ -113,7 +113,7 @@ class LoadingMeditation extends React.Component {
     return(
       <View style={{flex:1, display:'flex', alignItems:'center'}}>
         <Animated.Text style={{position:'absolute', marginTop:50, fontSize:30, color:fadeTitleColor, textAlign:'center'}}>
-          Lets get started with five calming breaths.
+          Lets start with five calming breaths.
         </Animated.Text>
 
         <View style={{position:'absolute', marginTop:180, alignItems:"center"}}>

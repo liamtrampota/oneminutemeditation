@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View, Animated, Easing, Image, TouchableOpacity, Button, AsyncStorage } from 'react-native';
+import { Text, View, Animated, Easing, Image, TouchableOpacity, Button, AsyncStorage, TextInput } from 'react-native';
 
 class Review extends React.Component {
   render(){
     return (
       <View style={{display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}>
-        <ReviewBody updateProgress={(type)=>this.props.updateProgress(type)}>
+        <ReviewBody updateProgress={(type, note)=>this.props.updateProgress(type, note)}>
         </ReviewBody>
       </View>
     )
@@ -20,39 +20,61 @@ class ReviewBody extends React.Component {
       quotes: ['no mud, no lotus'],
       fadeAnim: new Animated.Value(0),
       fadeAnim2: new Animated.Value(0),
-      quote: false
+      quote: false,
+      addNote: false,
+      text: '',
+      noteButtonText:'Add note?'
     })
+  }
+
+  addNote(modify) {
+    if(this.state.mode === 'choose'){
+      this.setState({addNote:!this.state.addNote})
+      if(modify=='modify'){
+        this.setState({noteButtonText:'Change note?'})
+      }
+    }
   }
 
   reviewPress(e, type){
     console.log("REVIEW PRESSED", type)
-    Animated.sequence([
-      Animated.timing(
-        this.state.fadeAnim, {
-          toValue:1,
-          duration:3000
-        }
-      ),
-      Animated.timing(
-        this.state.fadeAnim2, {
-          toValue:1,
-          duration:3000
-        }
-      )
-    ]).start()
+    if(this.state.mode === 'choose'){
+      Animated.sequence([
+        Animated.timing(
+          this.state.fadeAnim, {
+            toValue:1,
+            duration:3000
+          }
+        ),
+        Animated.timing(
+          this.state.fadeAnim2, {
+            toValue:1,
+            duration:3000
+          }
+        )
+      ]).start()
 
-    this.props.updateProgress(type)
-    if(type=='busy'){
-      this.setState({mode:'busy'})
-    } else if(type=='centered'){
-      this.setState({mode:'centered'})
-    } else {
-      this.setState({mode:'sleepy'})
+      if(this.state.text){
+        console.log('DEBUG')
+        console.log(this.state.text)
+        this.props.updateProgress(type, this.state.text)
+      } else {
+        this.props.updateProgress(type)
+      }
+
+
+      if(type=='busy'){
+        this.setState({mode:'busy'})
+      } else if(type=='centered'){
+        this.setState({mode:'centered'})
+      } else {
+        this.setState({mode:'sleepy'})
+      }
+
+      setTimeout(()=> {
+        this.setState({quote:true})
+      },3000)
     }
-
-    setTimeout(()=> {
-      this.setState({quote:true})
-    },3000)
   }
 
   render(){
@@ -151,7 +173,7 @@ class ReviewBody extends React.Component {
           No mud, no lotus
         </Animated.Text>
         <Animated.Text style={{position:'absolute', top:100, fontSize:35, textAlign:'center', color:fadeQuestionColor}}>
-          How was that for you?
+          How was that? We'll keep track for you.
         </Animated.Text>
         <TouchableOpacity onPress={(e, type)=>this.reviewPress(e, 'busy')}>
           <Animated.View style={{backgroundColor:busyFadeTitleColor, width:250, height:50, borderRadius:10, display:'flex', justifyContent:'center', margin:5}}>
@@ -174,8 +196,31 @@ class ReviewBody extends React.Component {
             </Animated.Text>
           </Animated.View>
         </TouchableOpacity>
-        {/* <Button title="Other" color='grey' onPress={this.props.changeToHome}>
-        </Button> */}
+        <View style={{paddingTop:10}}>
+          <TouchableOpacity onPress={()=>this.addNote()}>
+            {!this.state.addNote ?
+            <Animated.Text style={{color:fadeQuestionColor}}>
+              {this.state.noteButtonText}
+            </Animated.Text>
+              :
+            <View>
+              <TextInput
+                style={{height: 40, borderColor: 'gray', borderWidth: 1, width:200}}
+                placeholder="what's on your mind?"
+                onChangeText={(text) => this.setState({text})}
+                value={this.state.text}
+                textAlign='center'
+              />
+              <View style={{paddingTop:10}}>
+                <TouchableOpacity onPress={(modify)=>this.addNote('modify')}>
+                  <Text style={{color:'darkblue', textAlign:'center'}}>
+                    Save
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>}
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }

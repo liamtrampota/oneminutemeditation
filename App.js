@@ -31,7 +31,7 @@ class Body extends React.Component {
       )
     } else if (this.props.mode == 'review'){
       return(
-        <Review updateProgress={(type)=>this.props.updateProgress(type)} changeToHome={()=>this.props.changeToHome()}>
+        <Review updateProgress={(type, note)=>this.props.updateProgress(type, note)} changeToHome={()=>this.props.changeToHome()}>
         </Review>
       )
     } else if (this.props.mode == 'progress') {
@@ -69,13 +69,17 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      firstLoading: true, //zzz true
-      mode: 'progress', // loading, home, meditation, review, progress zzz
+      firstLoading: true, // true
+      mode: 'loading', // loading, home, meditation, review, progress
       progressObj: {}
     }
   }
 
   componentDidMount(){
+    // AsyncStorage.setItem('selfProgress', JSON.stringify({test:['centered', 'hello']}), (err, result) => {
+    //   if(err) {console.log(err)}
+    //   else {console.log(result)}
+    // }); RESET STORAGE
     SplashScreen.preventAutoHide();
     var retrieveData = async () => {
     try {
@@ -126,7 +130,7 @@ export default class App extends React.Component {
           <Body mode={this.state.mode} changeToHome={()=>this.changeToHome()}
             changeToMeditation={()=>this.changeToMeditation()}
             changeToReview={()=>this.changeToReview()}
-            updateProgress={(type)=>this.updateProgress(type)} progressObj={this.state.progressObj}>
+            updateProgress={(type, note)=>this.updateProgress(type, note)} progressObj={this.state.progressObj}>
           </Body>
           {(this.state.mode == 'home' || this.state.mode == 'review' || this.state.mode=='progress') ?
             <Navigation changeToHome={()=>this.changeToHome()} changeToProgress={()=>this.changeToProgress()}>
@@ -150,52 +154,18 @@ export default class App extends React.Component {
   }
 
 
-  updateProgress(type) {
+  updateProgress(type, note) {
     console.log('UPDATE PROGRESS', this.state.progressObj)
-    if(type === 'busy'){
-      var date = new Date()
-      var month = date.getMonth()
-      var progressObj = Object.assign({}, this.state.progressObj)
-      progressObj[date] = 'busy'
-      this.setState({progressObj: progressObj})
-      AsyncStorage.setItem('selfProgress', JSON.stringify(progressObj), (err, result) => {
-        if(err) {console.log(err)}
-        else {console.log(result)}
-      });
-    } else if (type === 'centered'){
-      var date = new Date()
-      var month = date.getMonth()
-      var progressObj = Object.assign({}, this.state.progressObj)
-      progressObj[date] = 'centered'
-      this.setState({progressObj: progressObj})
-      AsyncStorage.setItem('selfProgress', JSON.stringify(progressObj), (err, result) => {
-        if(err) {console.log(err)}
-        else {console.log(result)}
-      });
-    } else {
-      var date = new Date()
-      var month = date.getMonth()
-      var progressObj = Object.assign({}, this.state.progressObj)
-      progressObj[date] = 'sleepy'
-      this.setState({progressObj: progressObj})
-      AsyncStorage.setItem('selfProgress', JSON.stringify(progressObj), (err, result) => {
-        if(err) {console.log(err)}
-        else {console.log(result)}
-      });
-    }
+    console.log('type, note:', type, note)
+    var date = new Date()
+    var month = date.getMonth()
+    var progressObj = Object.assign({}, this.state.progressObj)
+    progressObj[date] = [type, note]
+    this.setState({progressObj: progressObj})
+    AsyncStorage.setItem('selfProgress', JSON.stringify(progressObj), (err, result) => {
+      if(err) {console.log(err)}
+      else {console.log(result)}
+    });
+
   }
-
-
 }
-
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

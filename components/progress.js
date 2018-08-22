@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Animated, Easing, TouchableOpacity, Image } from 'react-native';
+import { Text, View, Animated, Easing, TouchableOpacity, Image, FlatList, ListItem } from 'react-native';
 import { PieChart } from 'react-native-svg-charts'
 
 export default class Progress extends React.Component {
@@ -19,8 +19,17 @@ export default class Progress extends React.Component {
 
   render(){
     var dataValues = Object.values(this.props.progressObj)
+    var valueTypes = []
+    var valueNotes = []
+    dataValues.forEach(function(value){
+      valueTypes.push(value[0])
+      if(value[1]!==null){
+        valueNotes.push(value[1])
+      }
+    })
+
     var dataDates = Object.keys(this.props.progressObj)
-    console.log('PROGRESS', dataDates, dataValues)
+    console.log('PROGRESS', dataDates, dataValues, valueTypes, valueNotes)
     return(
       <View style={{display:'flex', flex:1, justifyContent:'center'}}>
         <Navigation pressedButton={(e, display)=>this.pressedButton(e, display)} display={this.state.display}>
@@ -28,7 +37,7 @@ export default class Progress extends React.Component {
         <Text style={{textAlign:'center'}}>
           Number of Meditations: {dataValues.length}
         </Text>
-        <ProgressPieChart dataValues={dataValues}>
+        <ProgressPieChart valueTypes={valueTypes}>
         </ProgressPieChart>
         <View style={{display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
           <Text style={{color:'#600080'}}>
@@ -40,6 +49,19 @@ export default class Progress extends React.Component {
           <Text style={{color: '#c61aff'}}>
             Sleepy
           </Text>
+        </View>
+        <View style={{height: 200, margin:20}}>
+          <Text style={{fontSize:25}}>
+            Notes
+          </Text>
+          <View style={{borderWidth:1, borderColor:'rgba(0, 0, 0, .4)'}}>
+            <FlatList
+              data={valueNotes.map((x)=>{
+                return {key: x}
+              })}
+              renderItem={({item}) => <Text style={{color:'white', marginLeft:10}}>{item.key}</Text>}
+            />
+          </View>
         </View>
       </View>
     )
@@ -109,7 +131,7 @@ class Navigation extends React.Component {
 class ProgressPieChart extends React.PureComponent {
 
   render() {
-    var dataValues = this.props.dataValues
+    var dataValues = this.props.valueTypes
     var sleepyLength = 0
     var centeredLength = 0
     var busyLength = 0
