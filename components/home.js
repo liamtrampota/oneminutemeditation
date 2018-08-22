@@ -1,7 +1,6 @@
 import React from 'react';
-import { Asset, Video } from 'expo';
+import { Asset, Video, Audio } from 'expo';
 import { StyleSheet, Text, View, Animated, Easing, TouchableOpacity, Image } from 'react-native';
-// import Video from 'react-native-video';
 
 
 class Home extends React.Component{
@@ -50,9 +49,6 @@ class Home extends React.Component{
       <View style={{flex:1, display:'flex', justifyContent:'center', alignItems:'center'}}>
 
         <View>
-          <Text>
-            Hello!
-          </Text>
           <VideoTest />
         </View>
 
@@ -84,15 +80,54 @@ class VideoTest extends React.Component {
     // { uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }
     return (
       <Video
-        source={require('../assets/sampleVid.mp4')}
+        source={require('../assets/birdsForest.mp3')}
         rate={1.0}
         volume={1.0}
         isMuted={false}
-        resizeMode="cover"
         shouldPlay
         isLooping
-        style={{ width: 200, height: 200 }}
       />
+    )
+  }
+}
+
+class AudioTest extends React.Component {
+  // This does not work. I am invoking things incorrectly, I think.
+  //
+  componentDidMount = () => {
+    try {
+          const { sound: soundObject, status } = Expo.Audio.Sound.create(
+            require('../assets/birdsForest.mp3'),
+            { shouldPlay: true }
+          );
+          console.log("should be playing")
+          // Your sound is playing!
+        } catch (error) {
+          console.log("error - audio playing")
+          // An error occurred!
+    }
+
+    // const soundObject=Audio.Sound();
+    //
+    // try {
+    //   console.log("soundAboutToPlay")
+    //   soundObject.loadAsync(require('../assets/birdsForest.mp3'))
+    //   .then(()=>soundObject.playAsync())
+    //   // Your sound is playing!
+    // } catch (error) {
+    //   // An error occurred!
+    //   console.log("soundError")
+    // }
+  }
+
+
+  render() {
+    // /Users/howardchong/horizons/oneminutemeditation/assets/sampleVid.mp4
+    // { uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }
+    //
+
+    return (
+      <View><Text>AudioTest:  Should Play</Text></View>
     )
   }
 }

@@ -5,7 +5,7 @@ class LoadingMeditation extends React.Component {
   state = {
     circleAnim: new Animated.Value(0),
     counter: 5,
-    TIMING: 500,
+    TIMING: 5000,
     continueAnim: new Animated.Value(0),
     fadeAnim: new Animated.Value(0)
   }
@@ -48,7 +48,6 @@ class LoadingMeditation extends React.Component {
     ]).start()
 
     let a=[1,2,3,4,5].map(x=>x*this.state.TIMING)
-    console.log("AAAAAA",a);
     a.forEach((y)=>
       setTimeout(()=>{
         this.setState((prevState) =>

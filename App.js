@@ -5,6 +5,7 @@ import LoadingMeditation from './components/loadingMeditation'
 import Home from './components/home'
 import Review from './components/review'
 import Meditation from './components/meditation'
+import GardenEncouragement from './components/GardenEncouragement'
 
 class Body extends React.Component {
   constructor(props){
@@ -15,8 +16,8 @@ class Body extends React.Component {
     console.log(this.props)
     if(this.props.mode == 'loading'){
       return (
-        <LoadingMeditation changeToHome={()=>this.props.changeToHome()}>
-        </LoadingMeditation>
+        <GardenEncouragement changeToHome={()=>this.props.changeToHome()}>
+        </GardenEncouragement>
       );
     } else if (this.props.mode == 'home'){
       return (
