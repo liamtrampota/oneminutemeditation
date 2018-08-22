@@ -48,8 +48,11 @@ class Home extends React.Component{
     return(
       <View style={{flex:1, display:'flex', justifyContent:'center', alignItems:'center'}}>
 
-        <View>
-          <VideoTest />
+        <View style={{position:'absolute', right:20, top:20}}>
+          <TouchableOpacity onPress={this.props.changeToGarden}>
+            <Image source={require('../assets/footprints.png')} style={{width:40, height:40}}>
+            </Image>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity onPress={this.props.changeToMeditation}>
@@ -73,23 +76,23 @@ class Home extends React.Component{
   }
 }
 
-class VideoTest extends React.Component {
-
-  render() {
-    // /Users/howardchong/horizons/oneminutemeditation/assets/sampleVid.mp4
-    // { uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }
-    return (
-      <Video
-        source={require('../assets/birdsForest.mp3')}
-        rate={1.0}
-        volume={1.0}
-        isMuted={false}
-        shouldPlay
-        isLooping
-      />
-    )
-  }
-}
+// class VideoTest extends React.Component {
+//
+//   render() {
+//     // /Users/howardchong/horizons/oneminutemeditation/assets/sampleVid.mp4
+//     // { uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }
+//     return (
+//       <Video
+//         source={require('../assets/birdsForest.mp3')}
+//         rate={1.0}
+//         volume={1.0}
+//         isMuted={false}
+//         shouldPlay
+//         isLooping
+//       />
+//     )
+//   }
+// }
 
 class AudioTest extends React.Component {
   // This does not work. I am invoking things incorrectly, I think.

@@ -17,6 +17,11 @@ class Body extends React.Component {
     console.log(this.props)
     if(this.props.mode == 'loading'){
       return (
+        <LoadingMeditation changeToHome={()=>this.props.changeToHome()} />
+      )
+    }
+    else if(this.props.mode == 'garden'){
+      return (
         <GardenEncouragement
           birdsChirpingSoundObject={this.props.birdsChirpingSoundObject}
           changeToHome={()=>this.props.changeToHome()}
@@ -25,7 +30,9 @@ class Body extends React.Component {
       );
     } else if (this.props.mode == 'home'){
       return (
-        <Home changeToMeditation={()=>this.props.changeToMeditation()}>
+        <Home changeToMeditation={()=>this.props.changeToMeditation()}
+            changeToGarden={()=>this.props.changeToGarden()}
+            changeToProgress={()=>this.props.changeToProgress()}>
         </Home>
       )
     } else if (this.props.mode == 'meditation'){
@@ -137,6 +144,10 @@ export default class App extends React.Component {
     this.setState({mode:'progress'})
   }
 
+  changeToGarden(){
+    this.setState({mode:'garden'})
+  }
+
   render() {
     console.log('RENDER', this.state.progressObj)
     if (this.state.firstLoading) {
@@ -155,11 +166,16 @@ export default class App extends React.Component {
             changeToMeditation={()=>this.changeToMeditation()}
             changeToReview={()=>this.changeToReview()}
             updateProgress={(type, note)=>this.updateProgress(type, note)} progressObj={this.state.progressObj}
-            birdsChirpingSoundObject={this.soundObjectWaves}>
-
+            changeToProgress={()=>this.changeToProgress()}
+            birdsChirpingSoundObject={this.soundObjectWaves}
+            changeToGarden={()=>this.changeToGarden()}>
           </Body>
           {(this.state.mode == 'home' || this.state.mode == 'review' || this.state.mode=='progress') ?
-            <Navigation changeToHome={()=>this.changeToHome()} changeToProgress={()=>this.changeToProgress()}>
+            <Navigation
+              changeToHome={()=>this.changeToHome()}
+              changeToProgress={()=>this.changeToProgress()}
+              changeToGarden={()=>this.changeToGarden()}
+            >
             </Navigation>
               :
             <View></View>}

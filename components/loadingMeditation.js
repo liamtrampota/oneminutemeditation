@@ -5,7 +5,7 @@ class LoadingMeditation extends React.Component {
   state = {
     circleAnim: new Animated.Value(0),
     counter: 5,
-    TIMING: 5000,
+    TIMING: 500,
     continueAnim: new Animated.Value(0),
     fadeAnim: new Animated.Value(0)
   }

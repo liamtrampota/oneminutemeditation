@@ -33,6 +33,7 @@ class GardenEncouragement extends React.Component{
     ).start()
 
     setTimeout(this.registerForPushNotificationsAsync, 2000);
+    setTimeout(this.props.changeToHome, 20000);
   }
 
   registerForPushNotificationsAsync= async function() {

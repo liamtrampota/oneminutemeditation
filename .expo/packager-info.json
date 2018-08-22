@@ -1,8 +1,8 @@
 {
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19002,
+  "packagerPid": 31301,
+  "expoServerNgrokUrl": "https://4g-she.liamtrampota.oneminutemeditation.exp.direct",
+  "packagerNgrokUrl": "https://packager.4g-she.liamtrampota.oneminutemeditation.exp.direct",
+  "ngrokPid": 31318
 }
