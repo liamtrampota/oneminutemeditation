@@ -12,6 +12,8 @@
     "async": "^2.6.1",
     "expo": "^29.0.0",
     "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-29.0.0.tar.gz"
+    "react-native": "https://github.com/expo/react-native/archive/sdk-29.0.0.tar.gz",
+    "react-native-svg": "^6.5.2",
+    "react-native-svg-charts": "^5.2.0"
   }
 }

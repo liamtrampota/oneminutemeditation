@@ -5,6 +5,7 @@ import LoadingMeditation from './components/loadingMeditation'
 import Home from './components/home'
 import Review from './components/review'
 import Meditation from './components/meditation'
+import Progress from './components/progress'
 
 class Body extends React.Component {
   constructor(props){
@@ -33,9 +34,14 @@ class Body extends React.Component {
         <Review updateProgress={(type)=>this.props.updateProgress(type)} changeToHome={()=>this.props.changeToHome()}>
         </Review>
       )
+    } else if (this.props.mode == 'progress') {
+        console.log('RENDER BODY', this.props.progressObj)
+        return(
+          <Progress changeToHome={()=>this.props.changeToHome()} progressObj={this.props.progressObj}>
+          </Progress>
+        )
+      }
     }
-  }
-
 }
 
 class Navigation extends React.Component {
@@ -48,9 +54,10 @@ class Navigation extends React.Component {
           <Image source={require('./assets/enso.png')} style={{width:40, height:40, tintColor:'gold'}}>
           </Image>
         </TouchableOpacity>
-
-        <Image source={require('./assets/progress.png')} style={{width:40, height:40}}>
-        </Image>
+        <TouchableOpacity onPress={this.props.changeToProgress}>
+          <Image source={require('./assets/progress.png')} style={{width:40, height:40}}>
+          </Image>
+        </TouchableOpacity>
 
 
       </View>
@@ -62,12 +69,9 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      firstLoading: true,
-      mode: 'loading', // loading, home, meditation, review
-      progressObj: {
-        userId: null,
-        breaths: []
-      }
+      firstLoading: true, //zzz true
+      mode: 'progress', // loading, home, meditation, review, progress zzz
+      progressObj: {}
     }
   }
 
@@ -101,7 +105,12 @@ export default class App extends React.Component {
     this.setState({mode:'meditation'})
   }
 
+  changeToProgress(){
+    this.setState({mode:'progress'})
+  }
+
   render() {
+    console.log('RENDER', this.state.progressObj)
     if (this.state.firstLoading) {
       return (
         <View style={{ flex: 1}}>
@@ -117,10 +126,10 @@ export default class App extends React.Component {
           <Body mode={this.state.mode} changeToHome={()=>this.changeToHome()}
             changeToMeditation={()=>this.changeToMeditation()}
             changeToReview={()=>this.changeToReview()}
-            updateProgress={(type)=>this.updateProgress(type)}>
+            updateProgress={(type)=>this.updateProgress(type)} progressObj={this.state.progressObj}>
           </Body>
-          {(this.state.mode == 'home' || this.state.mode == 'review') ?
-            <Navigation changeToHome={()=>this.changeToHome()}>
+          {(this.state.mode == 'home' || this.state.mode == 'review' || this.state.mode=='progress') ?
+            <Navigation changeToHome={()=>this.changeToHome()} changeToProgress={()=>this.changeToProgress()}>
             </Navigation>
               :
             <View></View>}
