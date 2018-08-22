@@ -77,8 +77,8 @@ export default class App extends React.Component {
 
   componentDidMount = () => {
     SplashScreen.preventAutoHide();
-    this.soundObject=new Audio.Sound();
-    this.soundObject.setOnPlaybackStatusUpdate(null);
+    this.soundObjectBirds=new Audio.Sound();
+    this.soundObjectBirds.setOnPlaybackStatusUpdate(null);
     // this.soundObject.loadAsync(
     //   require('./assets/birdsForest.mp3'),
     //   {
@@ -88,8 +88,12 @@ export default class App extends React.Component {
     // )
     // .then(()=>null)
     // .catch((err)=>console.log(err))
-    this.soundObject.loadAsync(require('./assets/birdsForest.mp3'));
+    this.soundObjectBirds.loadAsync(require('./assets/birdsForest.mp3'));
     console.log('soundObjectLoaded - CDM')
+
+    this.soundObjectWaves=new Audio.Sound();
+    this.soundObjectWaves.setOnPlaybackStatusUpdate(null);
+    this.soundObjectWaves.loadAsync(require('./assets/waves60secEdited.mp3'));
 
 
     var retrieveData = async () => {
@@ -137,7 +141,7 @@ export default class App extends React.Component {
             changeToMeditation={()=>this.changeToMeditation()}
             changeToReview={()=>this.changeToReview()}
             updateProgress={(type)=>this.updateProgress(type)}
-            birdsChirpingSoundObject={this.soundObject}
+            birdsChirpingSoundObject={this.soundObjectWaves}
           >
           </Body>
           {(this.state.mode == 'home' || this.state.mode == 'review') ?

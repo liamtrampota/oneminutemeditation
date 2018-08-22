@@ -137,7 +137,8 @@ class AudioTestAsync extends React.Component {
 
 
   componentDidMount = () => {
-    this.props.birdsChirpingSoundObject.playAsync()
+    this.props.birdsChirpingSoundObject.setIsLoopingAsync(true);
+    this.props.birdsChirpingSoundObject.playAsync();
     // Your sound is playing!
   }
 
