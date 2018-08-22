@@ -61,3 +61,7 @@ typings/
 
 # next.js build output
 .next
+
+# server stuff
+server/node_modules
+server/env.sh
