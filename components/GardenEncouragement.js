@@ -60,9 +60,7 @@ class GardenEncouragement extends React.Component{
         }}>
           <Image source={require('../assets/fog.jpg')}  />
           <Animated.Text  style={{color: colorText, width: 180, height: 400, fontSize: animFontSize, position:'absolute', top: 150, left:200}}>Nothing is Enough</Animated.Text>
-          <View>
-            <VideoTest />
-          </View>
+          <AudioTestAsync birdsChirpingSoundObject={this.props.birdsChirpingSoundObject}/>
         </Animated.View>
       </View>
     )
@@ -94,7 +92,10 @@ class AudioTest extends React.Component {
     try {
           const { sound: soundObject, status } = Expo.Audio.Sound.create(
             require('../assets/birdsForest.mp3'),
-            { shouldPlay: true }
+            {
+              shouldPlay: true,
+              isLooping: true,
+            }
           );
           console.log("should be playing")
           // Your sound is playing!
@@ -123,7 +124,31 @@ class AudioTest extends React.Component {
     //
 
     return (
-      <View><Text>AudioTest:  Should Play</Text></View>
+      <View></View>
+    )
+  }
+}
+
+class AudioTestAsync extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+
+
+  componentDidMount = () => {
+    this.props.birdsChirpingSoundObject.playAsync()
+    // Your sound is playing!
+  }
+
+
+  render() {
+    // /Users/howardchong/horizons/oneminutemeditation/assets/sampleVid.mp4
+    // { uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }
+    //
+
+    return (
+      <View></View>
     )
   }
 }

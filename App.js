@@ -1,5 +1,5 @@
 import React from 'react';
-import { Asset, SplashScreen } from 'expo';
+import { Asset, SplashScreen, Audio } from 'expo';
 import { StyleSheet, Text, View, AsyncStorage , Image, TouchableOpacity} from 'react-native';
 import LoadingMeditation from './components/loadingMeditation'
 import Home from './components/home'
@@ -16,7 +16,10 @@ class Body extends React.Component {
     console.log(this.props)
     if(this.props.mode == 'loading'){
       return (
-        <GardenEncouragement changeToHome={()=>this.props.changeToHome()}>
+        <GardenEncouragement
+          birdsChirpingSoundObject={this.props.birdsChirpingSoundObject}
+          changeToHome={()=>this.props.changeToHome()}
+        >
         </GardenEncouragement>
       );
     } else if (this.props.mode == 'home'){
@@ -72,18 +75,33 @@ export default class App extends React.Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount = () => {
     SplashScreen.preventAutoHide();
+    this.soundObject=new Audio.Sound();
+    this.soundObject.setOnPlaybackStatusUpdate(null);
+    // this.soundObject.loadAsync(
+    //   require('./assets/birdsForest.mp3'),
+    //   {
+    //     isLooping: true,
+    //   },
+    //   true //downloadFirst  // WRONG SYNTAX???? zzzzz
+    // )
+    // .then(()=>null)
+    // .catch((err)=>console.log(err))
+    this.soundObject.loadAsync(require('./assets/birdsForest.mp3'));
+    console.log('soundObjectLoaded - CDM')
+
+
     var retrieveData = async () => {
-    try {
-      console.log('HELLO')
-      let value = await AsyncStorage.getItem('selfProgress')
-      if (value != null) {
-        console.log(value)
-        this.setState({progressObj: JSON.parse(value)})
-      }
-    } catch (error) {
-      console.log(error)
+      try {
+        console.log('HELLO')
+        let value = await AsyncStorage.getItem('selfProgress')
+        if (value != null) {
+          console.log(value)
+          this.setState({progressObj: JSON.parse(value)})
+        }
+      } catch (error) {
+        console.log(error)
       }
     }
     retrieveData();
@@ -94,7 +112,7 @@ export default class App extends React.Component {
     this.setState({mode:'home'})
   }
 
-  changeToReview(){
+  changeToReview() {
     this.setState({mode:'review'})
   }
 
@@ -118,7 +136,9 @@ export default class App extends React.Component {
           <Body mode={this.state.mode} changeToHome={()=>this.changeToHome()}
             changeToMeditation={()=>this.changeToMeditation()}
             changeToReview={()=>this.changeToReview()}
-            updateProgress={(type)=>this.updateProgress(type)}>
+            updateProgress={(type)=>this.updateProgress(type)}
+            birdsChirpingSoundObject={this.soundObject}
+          >
           </Body>
           {(this.state.mode == 'home' || this.state.mode == 'review') ?
             <Navigation changeToHome={()=>this.changeToHome()}>
