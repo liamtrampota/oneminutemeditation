@@ -48,7 +48,7 @@ class Home extends React.Component{
     return(
       <View style={{flex:1, display:'flex', justifyContent:'center', alignItems:'center'}}>
 
-        <View style={{position:'absolute', right:20, top:20}}>
+        <View style={{position:'absolute', right:40, top:40}}>
           <TouchableOpacity onPress={this.props.changeToGarden}>
             <Image source={require('../assets/footprints.png')} style={{width:40, height:40}}>
             </Image>

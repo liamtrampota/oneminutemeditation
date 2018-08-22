@@ -33,7 +33,6 @@ class GardenEncouragement extends React.Component{
     ).start()
 
     setTimeout(this.registerForPushNotificationsAsync, 2000);
-    setTimeout(this.props.changeToHome, 20000);
   }
 
   registerForPushNotificationsAsync= async function() {
@@ -117,7 +116,7 @@ class GardenEncouragement extends React.Component{
     });
 
     return(
-      <View style={{display:'flex', position:'relative', justifyContent:'center', alignItems:'center'}}>
+      <View style={{display:'flex', position:'relative', justifyContent:'center', alignItems:'center', flex:1}}>
         <Animated.View style={{display:'flex', justifyContent:'center', alignItems:'center',
             transform: [
               {translateX: translateAmt},
@@ -129,6 +128,12 @@ class GardenEncouragement extends React.Component{
           <Animated.Text  style={{color: colorText, width: 180, height: 400, fontSize: animFontSize, position:'absolute', top: 150, left:200}}>Nothing is Enough</Animated.Text>
           <AudioTestAsync birdsChirpingSoundObject={this.props.birdsChirpingSoundObject}/>
         </Animated.View>
+        <View style={{position:'absolute', bottom:30, left:30}}>
+          <TouchableOpacity onPress={this.props.changeToHome}>
+            <Image source={require('../assets/footprintsleaving.png')} style={{width:40, height:40}}>
+            </Image>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
