@@ -126,7 +126,7 @@ class GardenEncouragement extends React.Component{
         }}>
           <Image source={require('../assets/fog.jpg')}  />
           <Animated.Text  style={{color: colorText, width: 180, height: 400, fontSize: animFontSize, position:'absolute', top: 150, left:200}}>Nothing is Enough</Animated.Text>
-          <AudioTestAsync birdsChirpingSoundObject={this.props.birdsChirpingSoundObject}/>
+          <AudioTestAsync soundObject={this.props.soundObject}/>
         </Animated.View>
         <View style={{position:'absolute', bottom:30, left:30}}>
           <TouchableOpacity onPress={this.props.changeToHome}>
@@ -206,11 +206,9 @@ class AudioTestAsync extends React.Component {
     super(props)
   }
 
-
-
   componentDidMount = () => {
-    this.props.birdsChirpingSoundObject.setIsLoopingAsync(true);
-    this.props.birdsChirpingSoundObject.playAsync();
+    this.props.soundObject.setIsLoopingAsync(true);
+    this.props.soundObject.playAsync();
     // Your sound is playing!
   }
 

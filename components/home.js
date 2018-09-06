@@ -55,17 +55,17 @@ class Home extends React.Component{
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity onPress={this.props.changeToMeditation}>
+        <TouchableOpacity onPress={()=>this.props.changeToMeditationImage(1)}>
           <Animated.View style={{width:180, height:180, borderRadius:90, backgroundColor:colorAnim1}}>
           </Animated.View>
         </TouchableOpacity>
 
         <View style={{display:'flex', flexDirection:'row', justifyContent:'space-around', alignItems:'center', width:'100%'}}>
-          <TouchableOpacity onPress={this.props.changeToMeditation}>
+          <TouchableOpacity onPress={()=>this.props.changeToMeditationImage(2)}>
             <Animated.View style={{width:180, height:180, borderRadius:90, backgroundColor:colorAnim2,}}>
             </Animated.View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.props.changeToMeditation}>
+          <TouchableOpacity onPress={()=>this.props.changeToMeditationImage(3)}>
             <Animated.View style={{width:180, height:180, borderRadius:90, backgroundColor:colorAnim3}}>
             </Animated.View>
           </TouchableOpacity>

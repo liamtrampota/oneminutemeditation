@@ -5,16 +5,18 @@ import LoadingMeditation from './components/loadingMeditation'
 import Home from './components/home'
 import Review from './components/review'
 import Meditation from './components/meditation'
+import MeditationImage from './components/meditationImage'
 import Progress from './components/progress'
 import GardenEncouragement from './components/GardenEncouragement'
 
 class Body extends React.Component {
   constructor(props){
-    super(props)
+    super(props);
   }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
+    console.log("BODY imageNumber", this.props.imageNumber)
     if(this.props.mode == 'loading'){
       return (
         <LoadingMeditation changeToHome={()=>this.props.changeToHome()} />
@@ -23,30 +25,42 @@ class Body extends React.Component {
     else if(this.props.mode == 'garden'){
       return (
         <GardenEncouragement
-          birdsChirpingSoundObject={this.props.birdsChirpingSoundObject}
+          soundObject={this.props.wavesSoundObject}
           changeToHome={()=>this.props.changeToHome()}
         >
         </GardenEncouragement>
       );
     } else if (this.props.mode == 'home'){
       return (
-        <Home changeToMeditation={()=>this.props.changeToMeditation()}
+        <Home
+            changeToMeditation={()=>this.props.changeToMeditation()}
+            changeToMeditationImage={(n)=>{this.props.changeToMeditationImage(n)}}
             changeToGarden={()=>this.props.changeToGarden()}
             changeToProgress={()=>this.props.changeToProgress()}>
         </Home>
       )
     } else if (this.props.mode == 'meditation'){
       return (
-        <Meditation changeToReview={()=>this.props.changeToReview()}>
-        </Meditation>
+        <MeditationImage
+          changeToReview={()=>this.props.changeToReview()}
+          changeToHome={()=>this.props.changeToHome()}
+          soundObject={this.props.birdsChirpingSoundObject}
+          imageNumber={this.props.imageNumber}
+        >
+        </MeditationImage>
       )
+      // return (
+      //   <Meditation changeToReview={()=>this.props.changeToReview()}>
+      //   </Meditation>
+      // )
+      //
     } else if (this.props.mode == 'review'){
       return(
         <Review updateProgress={(type, note)=>this.props.updateProgress(type, note)} changeToHome={()=>this.props.changeToHome()}>
         </Review>
       )
     } else if (this.props.mode == 'progress') {
-        console.log('RENDER BODY', this.props.progressObj)
+        //console.log('RENDER BODY', this.props.progressObj)
         return(
           <Progress changeToHome={()=>this.props.changeToHome()} progressObj={this.props.progressObj}>
           </Progress>
@@ -82,7 +96,8 @@ export default class App extends React.Component {
     this.state = {
       firstLoading: true, // true
       mode: 'loading', // loading, home, meditation, review, progress
-      progressObj: {}
+      progressObj: {},
+      imageNumber: 1,
     }
   }
 
@@ -95,16 +110,7 @@ export default class App extends React.Component {
     SplashScreen.preventAutoHide();
     this.soundObjectBirds=new Audio.Sound();
     this.soundObjectBirds.setOnPlaybackStatusUpdate(null);
-    // this.soundObject.loadAsync(
-    //   require('./assets/birdsForest.mp3'),
-    //   {
-    //     isLooping: true,
-    //   },
-    //   true //downloadFirst  // WRONG SYNTAX???? zzzzz
-    // )
-    // .then(()=>null)
-    // .catch((err)=>console.log(err))
-    this.soundObjectBirds.loadAsync(require('./assets/birdsForest.mp3'));
+    this.soundObjectBirds.loadAsync(require('./assets/birdsForest2.mp3'));
     console.log('soundObjectLoaded - CDM')
 
     this.soundObjectWaves=new Audio.Sound();
@@ -114,10 +120,10 @@ export default class App extends React.Component {
 
     var retrieveData = async () => {
       try {
-        console.log('HELLO')
+        // console.log('HELLO')
         let value = await AsyncStorage.getItem('selfProgress')
         if (value != null) {
-          console.log(value)
+          // console.log(value)
           this.setState({progressObj: JSON.parse(value)})
         }
       } catch (error) {
@@ -140,6 +146,11 @@ export default class App extends React.Component {
     this.setState({mode:'meditation'})
   }
 
+  changeToMeditationImage(n){
+    console.log('CHANGE TO MEDIMAGE ---', n)
+    this.setState({mode:'meditation', imageNumber: n})
+  }
+
   changeToProgress(){
     this.setState({mode:'progress'})
   }
@@ -149,7 +160,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log('RENDER', this.state.progressObj)
+    //console.log('RENDER', this.state.progressObj)
     if (this.state.firstLoading) {
       return (
         <View style={{ flex: 1}}>
@@ -164,11 +175,15 @@ export default class App extends React.Component {
         <View style={{backgroundColor:'skyblue', display:'flex', flex:1}}>
           <Body mode={this.state.mode} changeToHome={()=>this.changeToHome()}
             changeToMeditation={()=>this.changeToMeditation()}
+            changeToMeditationImage={(n)=>this.changeToMeditationImage(n)}
             changeToReview={()=>this.changeToReview()}
             updateProgress={(type, note)=>this.updateProgress(type, note)} progressObj={this.state.progressObj}
             changeToProgress={()=>this.changeToProgress()}
-            birdsChirpingSoundObject={this.soundObjectWaves}
-            changeToGarden={()=>this.changeToGarden()}>
+            birdsChirpingSoundObject={this.soundObjectBirds}
+            wavesSoundObject={this.soundObjectWaves}
+            changeToGarden={()=>this.changeToGarden()}
+            imageNumber={this.state.imageNumber}
+          >
           </Body>
           {(this.state.mode == 'home' || this.state.mode == 'review' || this.state.mode=='progress') ?
             <Navigation
@@ -197,8 +212,8 @@ export default class App extends React.Component {
 
 
   updateProgress(type, note) {
-    console.log('UPDATE PROGRESS', this.state.progressObj)
-    console.log('type, note:', type, note)
+    //console.log('UPDATE PROGRESS', this.state.progressObj)
+    //console.log('type, note:', type, note)
     var date = new Date()
     var month = date.getMonth()
     var progressObj = Object.assign({}, this.state.progressObj)
@@ -206,7 +221,9 @@ export default class App extends React.Component {
     this.setState({progressObj: progressObj})
     AsyncStorage.setItem('selfProgress', JSON.stringify(progressObj), (err, result) => {
       if(err) {console.log(err)}
-      else {console.log(result)}
+      else {
+        // console.log(result)
+      }
     });
 
   }
