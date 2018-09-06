@@ -43,7 +43,7 @@ class MeditationImage extends React.Component {
               duration: this.state.TIMING,
               easing: Easing.linear()
             }
-          ), {iterations: this.state.counter}
+          ), {iterations: 8}
       ),
       Animated.parallel([
         Animated.loop(
@@ -69,7 +69,7 @@ class MeditationImage extends React.Component {
       ])
     ]).start()
 
-    let a=[1,2,3,4,5,6,7].map(x=>x*this.state.TIMING)
+    let a=[1,2,3,4,5,6,7,8].map(x=>x*this.state.TIMING)
     console.log("AAAAAA",a);
     a.forEach((y)=>
       setTimeout(()=>{
